@@ -1,0 +1,127 @@
+﻿@model DMSystemMvc.Models.OrderDetail
+
+@using DMSystemMvc.Models
+
+@{
+    ViewData["Title"] = "Add Booking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //var Customers = ViewBag.Customers as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>;
+    //var Executives = ViewBag.Executives as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>;
+}
+
+<h3>Book your delivery</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CustomerId" class="control-label"></label>
+                <select asp-for="CustomerId" class="form-control" asp-items="@ViewBag.Customers"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExecutiveId" class="control-label"></label>
+                <select asp-for="ExecutiveId" class="form-control" asp-items="@ViewBag.Executives"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeOfPickup" class="control-label"></label>
+                <input asp-for="TimeOfPickup" class="form-control" onfocusout="SetDeliveryDate(this.TimeOfPickup)" />
+                <span asp-validation-for="TimeOfPickup" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeliveryDate" class="control-label"></label>
+                <input asp-for="DeliveryDate" class="form-control" type="date" />
+                <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="WeightOfPackage" class="control-label"></label>
+                <input asp-for="WeightOfPackage" class="form-control" min="1" onkeyup="PriceCal(this.WeightOfPackage)" required />
+                <span asp-validation-for="WeightOfPackage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger" name="Price"></span>
+            </div>
+            <div class="form-group" style="padding-top:10px">
+                <button type="submit" value="Create" class="btn btn-success" onclick="CreateFunction()"><span><i class="fa fa-check"></i></span> Add Booking</button>
+                <a asp-action="BookingList" class="btn btn-primary"><span><i class="fa fa-angle-left"></i></span> Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="BookingList" class="btn btn-info">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+    <script type="text/javascript">
+        function CreateFunction() {
+            var weight = $("#WeightOfPackage").val();
+            var price = $("#Price").val();
+            if (weight != null && weight != undefined && weight != "" && price != null && price != undefined && price != ""){
+            alert("successfully scheduled your delivery");
+            }
+        }
+
+        $(document).ready(function () {
+            var today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString().slice(0, 16);
+            //var dtToday= new Date();
+            //var month = dtToday.getMonth() + 1;
+            //var day = dtToday.getDate();
+            //var year = dtToday.getFullYear();
+            //if (month < 10)
+            //    month = '0' + month.toString();
+            //if (day < 10)
+            //    day = '0' + day.toString();
+
+            //var maxDate = year + '-' + month + '-' + day;
+            var maxDate = new Date().toISOString().slice(0, 10);
+            $('#DeliveryDate').attr('min', maxDate);
+
+            var deliveryDate = new Date();
+            // Add a day
+            deliveryDate.setDate(deliveryDate.getDate() + 1)
+            $('#DeliveryDate').val(deliveryDate.toISOString().slice(0, 10));
+
+            $("#TimeOfPickup")[0].min = today;
+            $('#TimeOfPickup').val(today);
+
+        });
+
+        function PriceCal(weightOfPack) {
+            var weightInKg = parseFloat(parseFloat($("#WeightOfPackage").val()) / 1000);
+            var weight = weightInKg;
+            var pricePerKg = 60.00;
+            var totalPrice = 0.00;
+            while (weight > parseFloat(0)) {
+                var weightInWhole = Math.trunc(weight);
+                if(weightInWhole>0)
+                {
+                totalPrice = parseFloat(pricePerKg) * parseFloat(weightInWhole);
+                    weight = parseFloat(weight) - parseFloat(weightInWhole);
+                }
+                else
+                {
+                    totalPrice = parseFloat(totalPrice) + parseFloat(pricePerKg);
+                    weight = parseFloat(weight) - parseFloat(weight);
+                }
+            }
+
+            $("#Price").val(totalPrice.toFixed(2));
+        }
+        function SetDeliveryDate()
+        {
+            debugger;
+            var deliveryDate = new Date(Date.parse($("#TimeOfPickup").val()));
+            deliveryDate.setDate(deliveryDate.getDate() + 1);
+            $('#DeliveryDate').val(deliveryDate.toISOString().slice(0, 10));
+        }
+    </script>

@@ -1,0 +1,107 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+
+@model IEnumerable<DMSystemMvc.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userType = HttpContextAccessor.HttpContext.Session.GetString("UserType");
+
+}
+
+<h3>List of Delivery Booking</h3>
+<hr />
+@if (userType != "Executive")
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary"><span><i class="fa fa-plus"></i></span> Add Booking</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Executive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeOfPickup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeightOfPackage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+           
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Executive.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeOfPickup)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WeightOfPackage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+               
+                @if (userType != "Executive")
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.OrderId" class="btn btn-success"><span><i class="fa fa-edit"></i></span> Edit </a>
+                        <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-primary"><span><i class="fa fa-info-circle"></i></span> Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-danger"><span><i class="fa fa-close"></i></span> Cancel</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-primary"><span><i class="fa fa-info-circle"></i></span> Details</a>
+                    </td>
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ("@userType"== "Executive") {
+            $("#liAddBooking").hide();
+            $("#liCancelBooking").hide();
+        }
+        else {
+            $("#liAddBooking").show();
+            $("#liCancelBooking").show();
+        }
+        $("#liViewBooking").show();
+    });
+</script>

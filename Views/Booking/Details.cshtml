@@ -1,0 +1,73 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+
+@model DMSystemMvc.Models.OrderDetail
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userType = HttpContextAccessor.HttpContext.Session.GetString("UserType");
+}
+
+
+<h3>Delivey Booking detail</h3>
+<hr />
+<div>
+    
+   
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DeliveryDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DeliveryDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TimeOfPickup)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TimeOfPickup)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WeightOfPackage)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.WeightOfPackage)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Executive)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Executive.Name)
+        </dd>
+    </dl>
+</div>
+<div style="padding-top:10px">
+    @*<a asp-action="Edit" asp-route-id="@Model?.OrderId">Edit</a> |*@
+    <a asp-action="BookingList" class="btn btn-primary"><span><i class="fa fa-angle-left"></i></span> Back to List</a>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ("@userType" == "Executive") {
+            $("#liAddBooking").hide();
+            $("#liCancelBooking").hide();
+        }
+        else {
+            $("#liAddBooking").show();
+            $("#liCancelBooking").show();
+        }
+        $("#liViewBooking").show();
+    });
+</script>

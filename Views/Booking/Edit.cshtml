@@ -1,0 +1,67 @@
+﻿@model DMSystemMvc.Models.OrderDetail
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //var Customers = ViewBag.Customers as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>;
+    //var Executives = ViewBag.Executives as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>;
+}
+
+<h3>Edit your Delivery Booking </h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OrderId" />
+            <div class="form-group">
+                <label asp-for="CustomerId" class="control-label"></label>
+                <select asp-for="CustomerId" class="form-control" asp-items="@ViewBag.Customers"></select>
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExecutiveId" class="control-label"></label>
+                <select asp-for="ExecutiveId" class="form-control" asp-items="@ViewBag.Executives"></select>
+                <span asp-validation-for="ExecutiveId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeliveryDate" class="control-label"></label>
+                <input asp-for="DeliveryDate" class="form-control" />
+                <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeOfPickup" class="control-label"></label>
+                <input asp-for="TimeOfPickup" class="form-control" />
+                <span asp-validation-for="TimeOfPickup" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WeightOfPackage" class="control-label"></label>
+                <input asp-for="WeightOfPackage" class="form-control" />
+                <span asp-validation-for="WeightOfPackage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="padding-top:10px">
+                <button type="submit" value="Save" class="btn btn-success" onclick="UpdateFunction()"><span><i class="fa fa-check"></i></span> Update</button>
+                <a asp-action="BookingList" class="btn btn-primary"><span><i class="fa fa-angle-left"></i></span> Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+    <script>
+        function UpdateFunction() {
+            alert("Successfully Updated");
+        }
+    </script>
