@@ -23,7 +23,7 @@ namespace DeliveryManagementSystemApi.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=YKG-PC;Database=DeliveryManagementSystem;Trusted_Connection=True;");
             }
         }
@@ -33,7 +33,7 @@ namespace DeliveryManagementSystemApi.Models
             modelBuilder.Entity<OrderDetail>(entity =>
             {
                 entity.HasKey(e => e.OrderId)
-                    .HasName("PK__OrderDet__F1E4607BC66ABF68");
+                    .HasName("PK__OrderDet__F1E4607BF8A99CE5");
 
                 entity.Property(e => e.OrderId).HasColumnName("Order_Id");
 
@@ -49,13 +49,13 @@ namespace DeliveryManagementSystemApi.Models
                     .WithMany(p => p.OrderDetailCustomers)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderDeta__Custo__02FC7413");
+                    .HasConstraintName("FK__OrderDeta__Custo__2CF2ADDF");
 
                 entity.HasOne(d => d.Executive)
                     .WithMany(p => p.OrderDetailExecutives)
                     .HasForeignKey(d => d.ExecutiveId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderDeta__Execu__03F0984C");
+                    .HasConstraintName("FK__OrderDeta__Execu__2DE6D218");
             });
 
             modelBuilder.Entity<Registration>(entity =>

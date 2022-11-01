@@ -16,28 +16,49 @@ namespace DeliveryManagementSystemApi.Controllers
 
 
         [HttpPost]
+        [Route("Registration")]
         public IActionResult Registration([FromBody] Registration registration)
         {
+            try { 
             _db.Registrations.Add(registration);
             _db.SaveChanges();
             return Ok(registration);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
-        public IActionResult Login([FromBody] Login login)
+        [Route("Login")]
+        public IActionResult Login(Login login)
         {
+            try { 
             //linq - language integrety query
             var result = (from i in _db.Registrations
                           where i.Name == login.Name
                           && i.RegistrationType == login.RegistrationType
                           && i.Password == login.Password
                           select i).SingleOrDefault();
+          
+
+            // return Ok(result);
             if (result != null)
             {
 
                 return Ok(result);
             }
-            return NotFound();
+            else
+            {
+                return NotFound();
+            }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            } 
+
         }
     }
 }
