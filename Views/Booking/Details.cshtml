@@ -10,24 +10,42 @@
 }
 
 
-<h3>Delivey Booking detail</h3>
+<h3>Booked Delivey detail of <b>Order Id : @Model.OrderId</b> </h3>
 <hr />
 <div>
     
    
     <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Executive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Executive.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TimeOfPickup)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TimeOfPickup)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DeliveryDate)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DeliveryDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TimeOfPickup)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TimeOfPickup)
-        </dd>
+        </dd>        
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.WeightOfPackage)
         </dt>
@@ -40,18 +58,8 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Executive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Executive.Name)
-        </dd>
+        
+        
     </dl>
 </div>
 <div style="padding-top:10px">

@@ -1,3 +1,4 @@
+using DMSystemMvc;
 using DMSystemMvc.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -13,6 +14,7 @@ builder.Services.AddSession();
 
 builder.Services.AddControllersWithViews();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddTransient<EHandlingMiddleware>();
 
 var app = builder.Build();
 
@@ -31,6 +33,7 @@ app.UseRouting();
 app.UseSession();
 
 app.UseAuthorization();
+app.UseMiddleware<EHandlingMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

@@ -10,9 +10,9 @@
 
 }
 
-<h3>List of Delivery Booking</h3>
+<h3>List of Booked Delivery </h3>
 <hr />
-@if (userType != "Executive")
+@if(userType != "Executive")
 {
     <p>
         <a asp-action="Create" class="btn btn-primary"><span><i class="fa fa-plus"></i></span> Add Booking</a>
@@ -23,18 +23,18 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.OrderId)
+            </th>            
+            <th>
+                @Html.DisplayNameFor(model => model.Executive)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Customer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Executive)
+                @Html.DisplayNameFor(model => model.TimeOfPickup)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DeliveryDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TimeOfPickup)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.WeightOfPackage)
@@ -55,16 +55,16 @@
                     @Html.DisplayFor(modelItem => item.OrderId)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Customer.Name)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Executive.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DeliveryDate)
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TimeOfPickup)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryDate)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.WeightOfPackage)
@@ -94,7 +94,7 @@
 </table>
 <script type="text/javascript">
     $(document).ready(function () {
-        if ("@userType"== "Executive") {
+        if ("@userType" == "Executive") {
             $("#liAddBooking").hide();
             $("#liCancelBooking").hide();
         }

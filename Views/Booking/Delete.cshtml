@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>Cancel your Delivery Booking</h3>
+<h3>Cancel Your Booked Delivery of <b>Order Id : @Model.OrderId</b> </h3>
 <hr />
 
 <div>
    
-    <hr />
+  
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DeliveryDate)
