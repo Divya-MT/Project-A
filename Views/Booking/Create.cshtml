@@ -9,7 +9,7 @@
     //var Executives = ViewBag.Executives as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>;
 }
 
-<h3>Book your delivery</h3>
+<h3>Book Your Delivery</h3>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -25,23 +25,23 @@
             </div>
             <div class="form-group">
                 <label asp-for="TimeOfPickup" class="control-label"></label>
-                <input asp-for="TimeOfPickup" class="form-control" onfocusout="SetDeliveryDate(this.TimeOfPickup)" />
+                <input asp-for="TimeOfPickup" class="form-control" onchange="SetDeliveryDate()" required />
                 <span asp-validation-for="TimeOfPickup" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DeliveryDate" class="control-label"></label>
-                <input asp-for="DeliveryDate" class="form-control" type="date" />
+                <input asp-for="DeliveryDate" class="form-control" type="date" onchange="SetDeliveryDate()" required/>
                 <span asp-validation-for="DeliveryDate" class="text-danger"></span>
             </div>
             
             <div class="form-group">
                 <label asp-for="WeightOfPackage" class="control-label"></label>
-                <input asp-for="WeightOfPackage" class="form-control" min="1" onkeyup="PriceCal(this.WeightOfPackage)" required />
+                <input asp-for="WeightOfPackage" class="form-control" min="1" onkeyup="PriceCal()" required />
                 <span asp-validation-for="WeightOfPackage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
+                <input asp-for="Price" class="form-control" min="1" onkeyup="PriceCal()" required />
                 <span asp-validation-for="Price" class="text-danger" name="Price"></span>
             </div>
             <div class="form-group" style="padding-top:10px">
@@ -51,10 +51,6 @@
         </form>
     </div>
 </div>
-
-@*<div>
-    <a asp-action="BookingList" class="btn btn-info">Back to List</a>
-</div>*@
 
 @section Scripts {
     @{
@@ -73,23 +69,16 @@
 
         $(document).ready(function () {
             var today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString().slice(0, 16);
-            //var dtToday= new Date();
-            //var month = dtToday.getMonth() + 1;
-            //var day = dtToday.getDate();
-            //var year = dtToday.getFullYear();
-            //if (month < 10)
-            //    month = '0' + month.toString();
-            //if (day < 10)
-            //    day = '0' + day.toString();
-
-            //var maxDate = year + '-' + month + '-' + day;
+            
             var maxDate = new Date().toISOString().slice(0, 10);
+            
             $('#DeliveryDate').attr('min', maxDate);
 
             var deliveryDate = new Date();
+
             // Add a day
             deliveryDate.setDate(deliveryDate.getDate() + 1)
-            $('#DeliveryDate').val(deliveryDate.toISOString().slice(0, 10));
+            $('#DeliveryDate').val(new Date(deliveryDate-deliveryDate.getTimezoneOffset() * 60000).toISOString().slice(0,10));
 
             $("#TimeOfPickup")[0].min = today;
             $('#TimeOfPickup').val(today);
@@ -105,7 +94,7 @@
                 var weightInWhole = Math.trunc(weight);
                 if(weightInWhole>0)
                 {
-                totalPrice = parseFloat(pricePerKg) * parseFloat(weightInWhole);
+                    totalPrice = parseFloat(pricePerKg) * parseFloat(weightInWhole);
                     weight = parseFloat(weight) - parseFloat(weightInWhole);
                 }
                 else
@@ -119,9 +108,8 @@
         }
         function SetDeliveryDate()
         {
-            debugger;
             var deliveryDate = new Date(Date.parse($("#TimeOfPickup").val()));
             deliveryDate.setDate(deliveryDate.getDate() + 1);
-            $('#DeliveryDate').val(deliveryDate.toISOString().slice(0, 10));
+            $('#DeliveryDate').val(new Date(deliveryDate - deliveryDate.getTimezoneOffset() * 60000).toISOString().slice(0, 10));
         }
     </script>
