@@ -59,53 +59,70 @@
     }
 
     <script type="text/javascript">
+
+        //Validate and show success message after booking
         function CreateFunction() {
             var weight = $("#WeightOfPackage").val();
             var price = $("#Price").val();
+            //weight and price should not be null Validation before submitting the Booking
             if (weight != null && weight != undefined && weight != "" && price != null && price != undefined && price != ""){
             alert("successfully scheduled your delivery");
             }
         }
-
+        
+        //To set and fill the date and time after the Page load
         $(document).ready(function () {
+            //Current(and Local server - (new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000)) Date and time for Time of Pickup
+            //Control in Create
             var today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString().slice(0, 16);
-            
+            //Current Date for Delivery Date
             var maxDate = new Date().toISOString().slice(0, 10);
             
+            //To disable Previous Dates for both Time of pickup and Delivery Date
+            $("#TimeOfPickup")[0].min = today;
             $('#DeliveryDate').attr('min', maxDate);
 
-            var deliveryDate = new Date();
+            //To set Current Date time for Time of Pick up
+            $('#TimeOfPickup').val(today);
 
+            //To set One + day from Time of Pick up (Local server - (new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000))
+            var deliveryDate = new Date();
             // Add a day
             deliveryDate.setDate(deliveryDate.getDate() + 1)
             $('#DeliveryDate').val(new Date(deliveryDate-deliveryDate.getTimezoneOffset() * 60000).toISOString().slice(0,10));
-
-            $("#TimeOfPickup")[0].min = today;
-            $('#TimeOfPickup').val(today);
-
         });
 
-        function PriceCal(weightOfPack) {
+        //To calculate the Price based on Weight of package
+        function PriceCal() {
+            //Get and convert the Weight of packages from grams to Kilo gram
             var weightInKg = parseFloat(parseFloat($("#WeightOfPackage").val()) / 1000);
             var weight = weightInKg;
+            //Price per Kg
             var pricePerKg = 60.00;
             var totalPrice = 0.00;
+
+            //To calculate Total price for the weight
             while (weight > parseFloat(0)) {
-                var weightInWhole = Math.trunc(weight);
+                var weightInWhole = Math.trunc(weight); //To get the whole Kg 
+                //Calculating amount only for whole kg
                 if(weightInWhole>0)
                 {
                     totalPrice = parseFloat(pricePerKg) * parseFloat(weightInWhole);
+                    //After calculating the amount for whole kg subtracting it form the orginal weight
                     weight = parseFloat(weight) - parseFloat(weightInWhole);
                 }
                 else
                 {
+                    //Calculating the amount for grams 
                     totalPrice = parseFloat(totalPrice) + parseFloat(pricePerKg);
+                    //Make weight =0 after calculating Total price
                     weight = parseFloat(weight) - parseFloat(weight);
                 }
             }
-
+            //To set the Total price in Price control
             $("#Price").val(totalPrice.toFixed(2));
         }
+        //To set the Delivery Date after the Time of Pickup selection
         function SetDeliveryDate()
         {
             var deliveryDate = new Date(Date.parse($("#TimeOfPickup").val()));
