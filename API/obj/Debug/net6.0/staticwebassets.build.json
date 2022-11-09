@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "nze4NMF61amOEcPozbq3wTAiVgPKnDn1XkL9ny8GZVY=",
+  "Source": "DeliveryManagementSystemApi",
+  "BasePath": "_content/DeliveryManagementSystemApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
