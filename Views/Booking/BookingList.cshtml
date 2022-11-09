@@ -6,11 +6,12 @@
 @{
     ViewData["Title"] = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //To get the User type to show hide menu
     var userType = HttpContextAccessor.HttpContext.Session.GetString("UserType");
 
 }
 
-<h3>List of Booked Delivery </h3>
+<h3>List of booked delivery </h3>
 <hr />
 @if(userType != "Executive")
 {
@@ -78,7 +79,7 @@
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.OrderId" class="btn btn-success"><span><i class="fa fa-edit"></i></span> Edit </a>
                         <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-primary"><span><i class="fa fa-info-circle"></i></span> Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-danger"><span><i class="fa fa-close"></i></span> Cancel</a>
+                        <a asp-action="ConcellationDetails" asp-route-id="@item.OrderId" class="btn btn-danger"><span><i class="fa fa-close"></i></span> Cancel</a>
                     </td>
                 }
                 else
@@ -93,6 +94,7 @@
     </tbody>
 </table>
 <script type="text/javascript">
+    //To show hide menu based on User Type
     $(document).ready(function () {
         if ("@userType" == "Executive") {
             $("#liAddBooking").hide();
